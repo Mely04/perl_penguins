@@ -1,0 +1,33 @@
+use strict;
+use warnings;
+use socketInterface;
+use client;
+use Socket qw(SOMAXCONN sockaddr_in inet_ntoa);
+use IO::Socket::INET;
+use IO::Select;
+use XML::Simple;
+use Data::Dumper;
+use Digest::MD5 qw(md5_hex);
+use xmlModule;
+use xtModule;
+use mysql;
+use logger;
+use socketBase;
+use DBI;
+
+my %config = ();
+
+$config{serverID} = 3100;
+$config{isLogin} = 1;
+$config{maxPOP} = 300;
+$config{bindAddr} = 0;
+$config{bindPort} = 3724;
+$config{sqlAddr} = '127.0.0.1';
+$config{sqlPort} = 3306;
+$config{sqlDB} = 'CPPS';
+$config{sqlUser} = '';
+$config{sqlPass} = '';
+$config{sqlConnNum} = 40; # Number of connections for each thread
+my $socketInterface = socketInterface->new();
+$socketInterface->init(%config);
+$socketInterface->{parent}->clientLoop();
